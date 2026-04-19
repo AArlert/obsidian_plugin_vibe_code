@@ -170463,23 +170463,6 @@ var MermaidThemePlugin = class extends import_obsidian.Plugin {
     this.addSettingTab(new MermaidThemeSettingTab(this.app, this));
     this.mermaid = mermaid;
     mermaid.initialize({ startOnLoad: true });
-    // Attempt to disable Obsidian internal mermaid plugin so this plugin handles 'mermaid' blocks
-    try {
-      const ip = this.app && this.app.internalPlugins;
-      if (ip) {
-        if (typeof ip.disablePlugin === 'function') {
-          ip.disablePlugin('mermaid');
-        } else if (typeof ip.getPlugin === 'function') {
-          const p = ip.getPlugin('mermaid');
-          if (p && typeof p.disable === 'function') p.disable();
-        } else if (ip.plugins && ip.plugins.mermaid && typeof ip.plugins.mermaid.disable === 'function') {
-          ip.plugins.mermaid.disable();
-        }
-      }
-    } catch (e) {
-      console.warn('mermaid-themes: could not disable internal mermaid plugin', e);
-    }
-
     this.setTheme(this.settings.theme);
     this.registerMarkdownCodeBlockProcessor("mermaid", this.draw_diagram());
   }
@@ -170503,23 +170486,7 @@ var MermaidThemePlugin = class extends import_obsidian.Plugin {
       });
     };
   }
-
   onunload() {
-    try {
-      const ip = this.app && this.app.internalPlugins;
-      if (ip) {
-        if (typeof ip.enablePlugin === 'function') {
-          ip.enablePlugin('mermaid');
-        } else if (typeof ip.getPlugin === 'function') {
-          const p = ip.getPlugin('mermaid');
-          if (p && typeof p.enable === 'function') p.enable();
-        } else if (ip.plugins && ip.plugins.mermaid && typeof ip.plugins.mermaid.enable === 'function') {
-          ip.plugins.mermaid.enable();
-        }
-      }
-    } catch (e) {
-      console.warn('mermaid-themes: could not re-enable internal mermaid plugin', e);
-    }
   }
   setTheme(theme2) {
     if (this.settings.tweakStyle) {

@@ -170464,7 +170464,7 @@ var MermaidThemePlugin = class extends import_obsidian.Plugin {
     this.mermaid = mermaid;
     mermaid.initialize({ startOnLoad: true });
     this.setTheme(this.settings.theme);
-    this.registerMarkdownCodeBlockProcessor("mermaid", this.draw_diagram());
+    this.registerMarkdownCodeBlockProcessor("merm", this.draw_diagram());
   }
   refresh() {
     const leaf = this.app.workspace.activeLeaf ? this.app.workspace.activeLeaf : null;
